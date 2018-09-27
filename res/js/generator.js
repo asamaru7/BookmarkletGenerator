@@ -1,0 +1,1 @@
+$(function(){var e=CodeMirror.fromTextArea(document.getElementById("code"),{lineNumbers:!0,matchBrackets:!0,extraKeys:{Enter:"newlineAndIndentContinueComment"}});$("a#bookmarklet").on("mousedown",function(){e.save();var t=encodeURI($("textarea#code").val());$("a#bookmarklet").attr("href","javascript:"+t)})});
