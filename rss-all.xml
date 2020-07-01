@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Bookmarklet Generator</title><link>https://bookmarklet.asamaru.net</link><description>Build bookmarklet in no time</description><image><title>Bookmarklet Generator</title><url>https://bookmarklet.asamaru.net/res/img/icon/icon.png</url><link>https://bookmarklet.asamaru.net</link><description>Build bookmarklet in no time</description></image><managingEditor>Asamaru (asamaru@asamaru.net)</managingEditor><pubDate>Thu, 27 Sep 2018 14:28:36 +0900</pubDate><item><title>Enable right click &amp; copy</title><pubDate>Mon, 12 Oct 2015 20:40:00 +0900</pubDate><link>https://bookmarklet.asamaru.net/recipes/right-click/</link><guid>https://bookmarklet.asamaru.net/recipes/right-click/</guid><author>Asamaru (asamaru@asamaru.net)</author><description><![CDATA[
+(function () {
+	if (window.asamaruAllowRightClick === undefined) {
+		// https://greasyfork.org/en/scripts/23772-absolute-enable-right-click-copy/code
+		window.asamaruAllowRightClick = function (dom) {
+			(function GetSelection() {
+				var Style = dom.createElement('style');
+				Style.type = 'text/css';
+				var TextNode = '*{user-select:text!important;-webkit-user-select:text!important;}';
+				if (Style.styleSheet) {
+					Style.styleSheet.cssText = TextNode;
+				}
+				else {
+					Style.appendChild(dom.createTextNode(TextNode));
+				}
+				dom.getElementsByTagName('head')[0].appendChild(Style);
+			})();
+
+			(function SetEvents() {
+				var events = ['copy', 'cut', 'paste', 'select', 'selectstart'];
+				for (var i = 0; i < events.length; i++)
+					dom.addEventListener(events[i], function (e) {
+						e.stopPropagation();
+					}, true);
+			})();
+
+			(function RestoreEvents() {
+				var n = null;
+				var d = document;
+				var b = dom.body;
+				var SetEvents = [d.oncontextmenu = n, d.onselectstart = n, d.ondragstart = n, d.onmousedown = n];
+				var GetEvents = [b.oncontextmenu = n, b.onselectstart = n, b.ondragstart = n, b.onmousedown = n, b.oncut = n, b.oncopy = n, b.onpaste = n];
+			})();
+
+			(function RightClickButton() {
+				setTimeout(function () {
+					dom.oncontextmenu = null;
+				}, 2000);
+				function EventsCall(callback) {
+					this.events = ['DOMAttrModified', 'DOMNodeInserted', 'DOMNodeRemoved', 'DOMCharacterDataModified', 'DOMSubtreeModified'];
+					this.bind();
+				}
+
+				EventsCall.prototype.bind = function () {
+					this.events.forEach(function (event) {
+						dom.addEventListener(event, this, true);
+					}.bind(this));
+				};
+				EventsCall.prototype.handleEvent = function () {
+					this.isCalled = true;
+				};
+				EventsCall.prototype.unbind = function () {
+					this.events.forEach(function (event) {
+					}.bind(this));
+				};
+				function EventHandler(event) {
+					this.event = event;
+					this.contextmenuEvent = this.createEvent(this.event.type);
+				}
+
+				EventHandler.prototype.createEvent = function (type) {
+					var target = this.event.target;
+					var event = target.ownerDocument.createEvent('MouseEvents');
+					event.initMouseEvent(type, this.event.bubbles, this.event.cancelable,
+						target.ownerDocument.defaultView, this.event.detail,
+						this.event.screenX, this.event.screenY, this.event.clientX, this.event.clientY,
+						this.event.ctrlKey, this.event.altKey, this.event.shiftKey, this.event.metaKey,
+						this.event.button, this.event.relatedTarget);
+					return event;
+				};
+				EventHandler.prototype.fire = function () {
+					var target = this.event.target;
+					var contextmenuHandler = function (event) {
+						event.preventDefault();
+					}.bind(this);
+					target.dispatchEvent(this.contextmenuEvent);
+					this.isCanceled = this.contextmenuEvent.defaultPrevented;
+				};
+				window.addEventListener('contextmenu', handleEvent, true);
+				function handleEvent(event) {
+					event.stopPropagation();
+					event.stopImmediatePropagation();
+					var handler = new EventHandler(event);
+					window.removeEventListener(event.type, handleEvent, true);
+					var EventsCallBback = new EventsCall(function () {
+					});
+					handler.fire();
+					window.addEventListener(event.type, handleEvent, true);
+					if (handler.isCanceled && (EventsCallBback.isCalled))
+						event.preventDefault();
+				}
+			})();
+
+			// function KeyPress(e) {
+			// 	if (e.altKey && e.ctrlKey) {
+			// 		if (confirm("Activate Absolute Right Click Mode!") === true) {
+			// 			Absolute_Mod();
+			// 		}
+			// 	}
+			// }
+			// dom.addEventListener("keydown", KeyPress);
+
+			(function Absolute_Mod() {
+				var events = ['contextmenu', 'copy', 'cut', 'paste', 'mouseup', 'mousedown', 'keyup', 'keydown', 'drag', 'dragstart', 'select', 'selectstart'];
+				for (var i = 0; i < events.length; i++) {
+					dom.addEventListener(events[i], function (e) {
+						e.stopPropagation();
+					}, true);
+				}
+			})();
+		};
+
+//		window.asamaruAllowRightClick(document);
+
+		function runAll(w) {
+			try {
+				window.asamaruAllowRightClick(w.document);
+			} catch (e) {
+			}
+			for (var i = 0; i < w.frames.length; i++) {
+				runAll(w.frames[i]);
+			}
+		}
+	}
+	runAll(window);
+})();]]></description></item>
+</channel>
+</rss>
