@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title>Bookmarklet Generator</title><link>https://bookmarklet.asamaru.net</link><description>Build bookmarklet in no time</description><image><title>Bookmarklet Generator</title><url>https://bookmarklet.asamaru.net/res/img/icon/icon.png</url><link>https://bookmarklet.asamaru.net</link><description>Build bookmarklet in no time</description></image><managingEditor>Asamaru (asamaru@asamaru.net)</managingEditor><pubDate>Thu, 27 Sep 2018 14:28:36 +0900</pubDate><item><title>Enable right click &amp; copy</title><pubDate>Mon, 12 Oct 2015 20:40:00 +0900</pubDate><link>https://bookmarklet.asamaru.net/recipes/right-click/</link><guid>https://bookmarklet.asamaru.net/recipes/right-click/</guid><author>Asamaru (asamaru@asamaru.net)</author><description><![CDATA[
+<title>Bookmarklet Generator</title><link>https://bookmarklet.x28.xyz</link><description>Build bookmarklet in no time</description><image><title>Bookmarklet Generator</title><url>https://bookmarklet.x28.xyz/res/img/icon/icon.png</url><link>https://bookmarklet.x28.xyz</link><description>Build bookmarklet in no time</description></image><managingEditor>Asamaru (asamaru@x28.xyz)</managingEditor><pubDate>Thu, 27 Sep 2018 14:28:36 +0900</pubDate><item><title>Enable right click &amp; copy</title><pubDate>Mon, 12 Oct 2015 20:40:00 +0900</pubDate><link>https://bookmarklet.x28.xyz/recipes/right-click/</link><guid>https://bookmarklet.x28.xyz/recipes/right-click/</guid><author>Asamaru (asamaru@x28.xyz)</author><description><![CDATA[
 (function () {
 	if (window.asamaruAllowRightClick === undefined) {
 		// https://greasyfork.org/en/scripts/23772-absolute-enable-right-click-copy/code
